@@ -1,0 +1,2182 @@
+{
+  "name": "Cash_flow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -704,
+        528
+      ],
+      "id": "93426d38-a452-455a-9751-c6e7908d737f",
+      "name": "Telegram Trigger",
+      "webhookId": "6734ec85-57aa-42a7-9fb1-6884ed028673"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "mindeeReceiptApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "document",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        16
+      ],
+      "id": "111ab76f-c817-499f-9517-5ca108700ef9",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.photo[$json.message.photo.length - 1].file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        16
+      ],
+      "id": "07ebb3e8-2ad1-43de-94f1-dd37d378e655",
+      "name": "Telegram",
+      "webhookId": "ea279eb4-02b7-4f44-8ead-babeb12e5bdc"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Дата": "={{ $json['Дата'] }}",
+            "Номер чека": "={{ $json['Номер чека'] }}",
+            "Поставщик": "={{ $json['Поставщик'] }}",
+            "Сумма по чеку": "={{ $json['Сумма по чеку'] }}",
+            "Категория": "={{ $json['Категория'] }}",
+            "Совпадают ли суммы": "={{ $json['Совпадают ли суммы'] }}",
+            "Валюта": "={{ $json['Валюта'] }}",
+            "Цена": "={{ $json['Цена'] }}",
+            "Название товара": "={{ $json['Название товара'] }}",
+            "Кол-во": "={{ $json['Кол-во'] }}",
+            "row_id": "={{ $json.Row_id }}"
+          },
+          "matchingColumns": [
+            "row_id"
+          ],
+          "schema": [
+            {
+              "id": "row_id",
+              "displayName": "row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Номер чека",
+              "displayName": "Номер чека",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Поставщик",
+              "displayName": "Поставщик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Категория",
+              "displayName": "Категория",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Сумма по чеку",
+              "displayName": "Сумма по чеку",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Совпадают ли суммы",
+              "displayName": "Совпадают ли суммы",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Разница",
+              "displayName": "Разница",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Валюта",
+              "displayName": "Валюта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Название товара",
+              "displayName": "Название товара",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Кол-во",
+              "displayName": "Кол-во",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "has_been_approved",
+              "displayName": "has_been_approved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "has_been_seted",
+              "displayName": "has_been_seted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        704,
+        16
+      ],
+      "id": "9f4afd6e-bee8-45e7-91c2-99f29edca84b",
+      "name": "Google Sheets"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import math\nfrom datetime import datetime\n\ndef safe_get_value(obj, default=0.0):\n    if isinstance(obj, dict):\n        return obj.get('value', default)\n    elif isinstance(obj, (int, float, str)):\n        return obj\n    return default\n\ndata = items[0]['json']\nprediction = data.get('document', {}).get('inference', {}).get('prediction', {})\n\n# Общая информация\nreceipt_date = safe_get_value(prediction.get('date').get('value'))\nreceipt_number = safe_get_value(prediction.get('receipt_number'))\nsupplier = safe_get_value(prediction.get('supplier_name'))\ncategory = safe_get_value(prediction.get('category'))\ntotal_amount = data.get('document', {}).get('inference', {}).get('prediction', {}).get('total_amount', {}).get('value', 0.0)\ncurrency = prediction.get('locale', {}).get('currency', 'EUR')\nline_items = prediction.get('line_items', [])\n\n# Сумма по строкам\ncalculated_total = sum(safe_get_value(item.get('total_amount')) for item in line_items)\n\n# Разница\ndiff_amount = round(abs(calculated_total - total_amount), 2)\nis_equal = math.isclose(calculated_total, total_amount, abs_tol=0.01)\n\n# Уникальное время для идентификации\nnow = int(datetime.now().timestamp())\n\n# Если нет позиций вообще\nif not line_items:\n    return [{\n        \"json\": {\n            \"Row_id\": now * 100 + i,\n            \"Дата\": receipt_date,\n            \"Номер чека\": now * 100,\n            \"Поставщик\": supplier,\n            \"Категория\": category,\n            \"Сумма по чеку\": total_amount,\n            \"Сумма по строкам\": calculated_total,\n            \"Разница в сумме\": diff_amount,\n            \"Совпадают ли суммы\": is_equal,\n            \"Валюта\": currency,\n            \"Название товара\": \"❌ Позиции не распознаны\",\n            \"Цена\": 0,\n            \"Кол-во\": 0\n        }\n    }]\n\n# Если позиции есть\noutput = []\nfor i, item in enumerate(line_items):\n    output.append({\n        \"Row_id\": now * 100 + i,\n        \"Дата\": receipt_date,\n        \"Номер чека\": now * 100,\n        \"Поставщик\": supplier,\n        \"Категория\": category,\n        \"Сумма по чеку\": total_amount,\n        \"Сумма по строкам\": calculated_total,\n        \"Разница в сумме\": diff_amount,\n        \"Совпадают ли суммы\": is_equal,\n        \"Валюта\": currency,\n        \"Название товара\": safe_get_value(item.get('description'), 'Без названия'),\n        \"Цена\": safe_get_value(item.get('total_amount')),\n        \"Кол-во\": safe_get_value(item.get('quantity'), 1)\n    })\n\nreturn [{ \"json\": row } for row in output]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        16
+      ],
+      "id": "7b89a486-6b5b-48b6-987f-ede741614081",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e0df57dd-c69d-4d77-9a66-23591cf1c653",
+              "leftValue": "={{ Number(0,5) }}",
+              "rightValue": "={{ Number($json[\"Разница в сумме\"]) }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        16
+      ],
+      "id": "3f0c3d38-0522-4d18-9c43-83a7716d8a11",
+      "name": "Check Difference"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        288
+      ],
+      "id": "07a65183-bf32-4025-89a1-ae18eae91836",
+      "name": "Telegram1",
+      "webhookId": "d23aeca4-430b-4f8e-aad9-a04219b4814b"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        176,
+        288
+      ],
+      "id": "44d3a7e4-497b-40d7-8517-49e12d3d8623",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dbf9b315-56eb-41d0-af35-95f99c85481a",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        560
+      ],
+      "id": "e1b4fa16-7c36-48a0-bee0-103abf28ee69",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "92a4555f-6819-46d2-9d87-3cbbe260d997",
+              "leftValue": true,
+              "rightValue": "={{ Array.isArray($json.message.photo) && $json.message.photo.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        544
+      ],
+      "id": "2bdf19d9-fba9-45c4-9178-9d735f58b23a",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "71113d07-10a2-4ace-b272-96a93ba45bf9",
+              "leftValue": "={{$json.message.text}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        576
+      ],
+      "id": "45e9d0e4-c3bf-466e-98f0-e06e2b44825f",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Привет!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        176,
+        448
+      ],
+      "id": "54428dba-b735-496b-ba67-717be641449d",
+      "name": "Telegram3",
+      "webhookId": "9cceef5d-b133-408a-9913-5c9aca1da6ba"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.result.chat.id }}",
+        "text": "=❗️Обнаружено расхождение в чеке:\n\n📄 Чек: {{ $('Merge').item.json['Номер чека'] }}\n📅 Дата: {{ $('Merge').item.json['Дата'] }}\n💰 Сумма по чеку: {{ $('Merge').item.json['Сумма по чеку'] }} €\n📦 Сумма по позициям: {{ $('Code').item.json['Сумма по строкам'] }} €\n➖ Разница: {{ $('Code').item.json['Разница в сумме'] }} €\n\n✍️ Введите цену вручную или подтвердите добавление недостающего товара",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "✅ Подтвердить",
+                    "additionalFields": {
+                      "callback_data": "=approve_{{ $('Merge').item.json['Номер чека'] }}"
+                    }
+                  },
+                  {
+                    "text": "✏️ Ввести вручную",
+                    "additionalFields": {
+                      "callback_data": "=manual_{{ $('Merge').item.json['Номер чека'] }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        288
+      ],
+      "id": "ff1dae38-3bc0-4be3-92d1-2350d4d31a41",
+      "name": "Telegram6",
+      "webhookId": "2ae5477c-8f50-4320-8d24-00d8829e6635"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a71ed56-a7a1-411d-aacf-2cc1e6932cd5",
+              "leftValue": "={{ $json.callback_query.data }}",
+              "rightValue": "approve_",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -336,
+        -352
+      ],
+      "id": "a94c074f-13a7-43af-aa5a-5a13ccd795ee",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a71ed56-a7a1-411d-aacf-2cc1e6932cd5",
+              "leftValue": "={{ !!$json.callback_query }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        528
+      ],
+      "id": "9db56464-55f4-4b8a-aa5a-d384ca696402",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a71ed56-a7a1-411d-aacf-2cc1e6932cd5",
+              "leftValue": "={{ $json.callback_query.data }}",
+              "rightValue": "manual_",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -192,
+        -160
+      ],
+      "id": "21384965-84ce-401d-905b-4c8d33c64605",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"Row_id\":\n {{ $json.callback_query.message.reply_markup.inline_keyboard[0][0].callback_data.replace(\"approve_\", \"\") }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        -368
+      ],
+      "id": "87774c7f-1bbd-499a-b0aa-870cc216c0ef",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_id": "={{ $json.row_id }}",
+            "has_been_approved ": "TRUE"
+          },
+          "matchingColumns": [
+            "row_id"
+          ],
+          "schema": [
+            {
+              "id": "row_id",
+              "displayName": "row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер чека",
+              "displayName": "Номер чека",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Поставщик",
+              "displayName": "Поставщик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Категория",
+              "displayName": "Категория",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Сумма по чеку",
+              "displayName": "Сумма по чеку",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Совпадают ли суммы",
+              "displayName": "Совпадают ли суммы",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Валюта",
+              "displayName": "Валюта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Название товара",
+              "displayName": "Название товара",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Кол-во",
+              "displayName": "Кол-во",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "has_been_approved ",
+              "displayName": "has_been_approved ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "has_been_seted",
+              "displayName": "has_been_seted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Row_id",
+              "displayName": "Row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        720,
+        -368
+      ],
+      "id": "34a57fc3-39cc-4462-a113-9dfe9c44a012",
+      "name": "Google Sheets1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Номер чека",
+              "lookupValue": "={{ $json.Row_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        240,
+        -368
+      ],
+      "id": "c921137b-407d-4022-b7ab-ea2691a2c66b",
+      "name": "Google Sheets2"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"Row_id\": \"{{ $json.callback_query.data.replace('manual_', '') }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        -176
+      ],
+      "id": "1d84b86f-8fa4-4ef5-a55a-175da539316e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Номер чека",
+              "lookupValue": "={{ $json.Row_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        240,
+        -176
+      ],
+      "id": "41eaf4f2-3b55-4da5-8dbd-85aaf0aa637c",
+      "name": "Google Sheets3",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.callback_query.message.chat.id }}",
+        "text": "={{ $('Code1').first().json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        -176
+      ],
+      "id": "65f78c7b-ba1b-4596-9c2b-cc98f2a4d114",
+      "name": "Telegram7",
+      "webhookId": "2ae5477c-8f50-4320-8d24-00d8829e6635"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "items_text = []\n\nfor item in items:\n    reciept_id = item['json'].get('Номер чека', '—')\n    row_id = item['json'].get('row_id', '—')\n    name = item['json'].get('Название товара', '—')\n    price = item['json'].get('Цена', '—')\n    qty = item['json'].get('Кол-во', '—')\n    items_text.append(f\"{reciept_id} |{row_id} |{name} | {price} € | {qty}\")\n\ntotal = items[0]['json'].get('Сумма по чеку', '—')\n\nmessage = f\"Сумма по чеку : {total} €\\n ---\\n\" + \"\\n\".join(items_text) + \\\n          \"\\n\\n✍️ Измени или дополни строки вручную в этом же формате и отправь сюда.\"\n\nreturn [{\n    \"json\": {\n        \"text\": message\n    }\n}]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        -176
+      ],
+      "id": "1f1d755c-d11c-4049-9a5f-c3d358e9073f",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "input_text = items[0]['json']['message']['text']\n\n# Гарантируем список строк\nif isinstance(input_text, str):\n    lines = input_text.strip().split('\\n')\nelse:\n    lines = input_text\n\nparsed_lines = []\n\nfor line in lines:\n    # Пропускаем заголовки, разделители и пустые строки\n    if line.startswith(\"Сумма по чеку\") or line.startswith(\"---\") or line.startswith(\"✍️\") or not line.strip():\n        continue\n\n    parts = [part.strip() for part in line.split('|')]\n    if len(parts) != 5:\n        continue  # Пропускаем строку, если не 4 части\n\n    reciept_id = parts[0]\n    row_id = parts[1]\n    name = parts[2]\n    price_text = parts[3].replace(\"€\", \"\").strip().replace(\",\", \".\")\n    qty_text = parts[4].strip()\n\n    try:\n        price = float(price_text)\n    except ValueError:\n        price = 0.0\n\n    try:\n        qty = int(qty_text)\n    except ValueError:\n        qty = 1\n\n    parsed_lines.append({\n        \"reciept_id\": reciept_id,\n        \"row_id\": row_id,\n        \"Название товара\": name,\n        \"Цена\": price,\n        \"Кол-во\": qty\n    })\n\nreturn [{\"json\": item} for item in parsed_lines]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        560
+      ],
+      "id": "0e67c5d3-e454-4a6e-830d-df174fa66878",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_id": "={{ $('Code2').item.json.row_id }}",
+            "has_been_seted": "TRUE",
+            "Название товара": "={{ $('Code2').item.json['Название товара'] }}",
+            "Цена": "={{ $('Code2').item.json['Цена'] }}",
+            "Кол-во": "={{ $('Code2').item.json['Кол-во'] }}",
+            "Номер чека": "={{ $('Code2').item.json.reciept_id }}"
+          },
+          "matchingColumns": [
+            "row_id"
+          ],
+          "schema": [
+            {
+              "id": "row_id",
+              "displayName": "row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер чека",
+              "displayName": "Номер чека",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Поставщик",
+              "displayName": "Поставщик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Категория",
+              "displayName": "Категория",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Сумма по чеку",
+              "displayName": "Сумма по чеку",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Совпадают ли суммы",
+              "displayName": "Совпадают ли суммы",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Разница",
+              "displayName": "Разница",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Валюта",
+              "displayName": "Валюта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Название товара",
+              "displayName": "Название товара",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Кол-во",
+              "displayName": "Кол-во",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "has_been_approved",
+              "displayName": "has_been_approved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "has_been_seted",
+              "displayName": "has_been_seted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        640,
+        560
+      ],
+      "id": "15f55307-b18f-4c60-9dc0-4b9123329eb5",
+      "name": "Google Sheets8",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Номер чека",
+              "lookupValue": "={{ $json['Номер чека'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        816,
+        560
+      ],
+      "id": "b0373871-7ffe-499f-bae3-1c7b01541f08",
+      "name": "Google Sheets9",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "if not items:\n    return [{\"json\": {\"совпадает\": False, \"reason\": \"Нет данных\"}}]\n\n# Получаем контрольную сумму и номер чека из первого элемента\ntry:\n    total_expected = float(items[0][\"json\"].get(\"Сумма по чеку\", 0))\nexcept:\n    total_expected = 0.0\n\nreceipt_number = items[0][\"json\"].get(\"Номер чека\", \"\")\n\n# Считаем сумму позиций\ntotal_calculated = 0.0\ncourency = items[0][\"json\"].get(\"Валюта\", \"\")\nfor item in items:\n    try:\n        courency = courency\n        row_id = item[\"json\"].get(\"row_id\", \"\")\n        price = float(item[\"json\"].get(\"Цена\", 0))\n        qty = int(item[\"json\"].get(\"Кол-во\", 1))\n        total_calculated += price * qty\n    except:\n        continue\n\n# Округляем и сравниваем\ntotal_expected = round(total_expected, 2)\ntotal_calculated = round(total_calculated, 2)\nmatch = total_expected == total_calculated\ndifference = round(total_expected - total_calculated, 2)\n\n# Возвращаем для каждого элемента отдельный объект с добавленными полями\noutput = []\nfor item in items:\n    json_data = item[\"json\"]\n    json_data.update({\n        \"Номер чека\": receipt_number,\n        \"row_id\": row_id,\n        \"Совпадают ли суммы\": match,        \n        \"has_been_approved\": match,\n        \"контрольная_сумма\": total_calculated,\n        \"сумма_по_чеку\": total_expected,\n        \"Валюта\" :courency,\n        \"разница\": difference\n    })\n    output.append({\"json\": json_data})\n\nreturn output\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        560
+      ],
+      "id": "a92306b3-ce5a-4326-91b9-5bfbe0b4bb8b",
+      "name": "Code5"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_id": "={{ $json.row_id }}",
+            "Совпадают ли суммы": "={{ $json[\"Совпадают ли суммы\"] }}",
+            "has_been_approved": "={{ $json.has_been_approved }}",
+            "Сумма по чеку": "={{ $json[\"сумма_по_чеку\"] }}",
+            "Валюта": "={{ $json['Валюта'] }}",
+            "Разница": "={{ $json['разница'] }}"
+          },
+          "matchingColumns": [
+            "row_id"
+          ],
+          "schema": [
+            {
+              "id": "row_id",
+              "displayName": "row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер чека",
+              "displayName": "Номер чека",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Поставщик",
+              "displayName": "Поставщик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Категория",
+              "displayName": "Категория",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Сумма по чеку",
+              "displayName": "Сумма по чеку",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Совпадают ли суммы",
+              "displayName": "Совпадают ли суммы",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Разница",
+              "displayName": "Разница",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Валюта",
+              "displayName": "Валюта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Название товара",
+              "displayName": "Название товара",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Кол-во",
+              "displayName": "Кол-во",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "has_been_approved",
+              "displayName": "has_been_approved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "has_been_seted",
+              "displayName": "has_been_seted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1376,
+        688
+      ],
+      "id": "3bce0d29-3b6f-4a26-b52f-98fc157b44d2",
+      "name": "Google Sheets10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "801c0ed1-a6e2-430b-97f9-d15ed3beff1f",
+              "leftValue": "={{ $json['Совпадают ли суммы'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1552,
+        544
+      ],
+      "id": "e6b99a67-872e-4eb9-8be6-771f1166ea10",
+      "name": "If7",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        560
+      ],
+      "id": "f5f1d49a-a57b-42a3-b3af-9a7fe687397e",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Правки внесены. Чек залит в базу данных!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1824,
+        528
+      ],
+      "id": "e84f9136-4398-4172-b314-e9d87517030f",
+      "name": "Telegram4",
+      "webhookId": "9cceef5d-b133-408a-9913-5c9aca1da6ba",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Итоговая сумма отличается от расчетной. \nОтредактируй данные по чеку или измени итоговую сумму чека. \nРазница: {{ $json['Разница'] }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1712,
+        704
+      ],
+      "id": "eceff3ce-4574-4419-b428-0269785c550a",
+      "name": "Telegram5",
+      "webhookId": "9cceef5d-b133-408a-9913-5c9aca1da6ba",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Чек залит в базу данных!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1152,
+        -16
+      ],
+      "id": "1d6ef2c3-11d2-4e01-a43d-32d1c5388530",
+      "name": "Telegram8",
+      "webhookId": "9cceef5d-b133-408a-9913-5c9aca1da6ba",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Несмотря на разницу между итоговой и расчетной суммой, чек был залит в базу данных!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        928,
+        -368
+      ],
+      "id": "ac608335-9a99-4a9a-8a65-91e74cbe4471",
+      "name": "Telegram9",
+      "webhookId": "9cceef5d-b133-408a-9913-5c9aca1da6ba",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Номер чека",
+              "lookupValue": "={{ $('Code5').item.json['Номер чека'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1936,
+        704
+      ],
+      "id": "5a4e08c0-9815-47e6-9f39-c35b968a1e87",
+      "name": "Google Sheets11",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        960
+      ],
+      "id": "0036b573-0439-44e7-969e-643d1b7e8996",
+      "name": "Groq Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a smart categorization assistant for financial tracking. Your task is to analyze the name of a product written in German and determine the most appropriate category for it from the provided list.\n\nThe output must be only one of the following categories written exactly in **Russian** (do not translate them, use as-is):\n\nАксессуары, Алкоголь, Аптека, Банк, Вкусненькое, Гигиена, Для дома, Для работы, Долг, Досуг, Еда,  \nЗалог (тара), Здоровье, Канабис, Карманные, Комуналка, Комунальные, Красота, Кредит, Мелкие расходы,  \nНапитки, Обучение, Одежда, Перевод, Подарки, Прибыль, Прибыль Тара бутылки, Продукты питания,  \nПсихолог, Путешествие, Развлечение, Связь, Сигареты, Скидка, Сладости, Спорт, Транспорт, Услуги,  \nХобби, Хотелка\n\nYour response must be only **one category** from the list, no explanations.\n\nExamples:\n- \"Milch 3,5% 1L\" → Продукты питания  \n- \"Adidas Sporthose Herren\" → Одежда  \n- \"Bier Heineken 0,5L\" → Алкоголь  \n- \"DM Gutschein 20€\" → Подарки  \n- \"Krankengymnastik Praxis Müller\" → Здоровье  \n- \"Shampoo Schwarzkopf\" → Красота\n\nNow categorize the following product:\ncategory:\n{{ $json[\"Название товара\"] }}}\n\nOutput must be in structure:\n\n{\"row_id\":{{ $json.row_id }},\n\"Название товара\": {{ $json[\"Название товара\"] }},\n\"category\": category}\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2144,
+        704
+      ],
+      "id": "575998fb-9451-43db-9f5f-c7eb6a39ae8a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import json\nimport re\n\nstructured_items = []\n\nfor item in items:\n    raw = item[\"json\"].get(\"output\", \"\")\n    \n    # Преобразуем псевдо-JSON в валидный JSON\n    try:\n        # Добавим кавычки вокруг значений, если их нет (вокруг строк)\n        raw_cleaned = re.sub(r'(?<=:\\s)([А-Яа-яA-Za-z0-9\\s\\.\\-]+)(?=,|\\n|})', r'\"\\1\"', raw)\n\n        # Преобразуем в словарь\n        parsed = json.loads(raw_cleaned)\n        structured_items.append({\"json\": parsed})\n    except Exception as e:\n        structured_items.append({\"json\": {\"error\": str(e), \"raw\": raw}})\n\nreturn structured_items"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2496,
+        704
+      ],
+      "id": "a3a4d567-24e7-4496-8c02-abb507ae5b98",
+      "name": "Code3",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y",
+          "mode": "list",
+          "cachedResultName": "CashFlow_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ki2b66Zy60xu3RJhKo6rvMQ1fZGQRiFWJRTFOKwqq4Y/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_id": "={{ $json.row_id }}",
+            "Категория": "={{ $json.category }}"
+          },
+          "matchingColumns": [
+            "row_id"
+          ],
+          "schema": [
+            {
+              "id": "row_id",
+              "displayName": "row_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер чека",
+              "displayName": "Номер чека",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Поставщик",
+              "displayName": "Поставщик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Категория",
+              "displayName": "Категория",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Сумма по чеку",
+              "displayName": "Сумма по чеку",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Совпадают ли суммы",
+              "displayName": "Совпадают ли суммы",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Разница",
+              "displayName": "Разница",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Валюта",
+              "displayName": "Валюта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Название товара",
+              "displayName": "Название товара",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Кол-во",
+              "displayName": "Кол-во",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "has_been_approved",
+              "displayName": "has_been_approved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "has_been_seted",
+              "displayName": "has_been_seted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2800,
+        704
+      ],
+      "id": "64de9bf6-b9e5-410b-b7ba-9c9600601c7c",
+      "name": "Google Sheets4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Difference": {
+      "main": [
+        [
+          {
+            "node": "Telegram8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "Telegram6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Check Difference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Telegram7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets8": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets9": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Telegram4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets10": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Telegram9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram5": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets11": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9f4bf9e9-5da7-4b60-b8f4-b11d40feab98",
+  "meta": {
+    "instanceId": "aaad20ff6439660ddf7601e4d50c6c1d0a61ecc719906322f12f30ed01a75762"
+  },
+  "id": "saCU4XXSsBt6j1dU",
+  "tags": []
+}
